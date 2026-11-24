@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ME 103 Studio — Engineering Materials CBT</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ==================== 4-LAYER ARCHITECTURAL STUDIO BACKGROUND ==================== -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="bg-aurora"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-rings"></div>
+    <canvas id="bg-field-canvas"></canvas>
+    <div class="bg-vignette"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <!-- ==================== VIEW 1: LAUNCHPAD ==================== -->
+  <div id="view-home">
+    <header class="topbar">
+      <div class="brand" id="brand-home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2"/>
+            <polyline points="3.3 7 12 12 20.7 7"/>
+            <line x1="12" y1="22" x2="12" y2="12"/>
+          </svg>
+        </span>
+        <span class="brand-name">ME 103 Studio</span>
+      </div>
+      <div class="nav-group">
+        <button class="btn btn-ghost btn-sm" id="btn-open-formulas-home" title="Formula Sheet &amp; Diagrams (F)">Formulas <span class="kbd">F</span></button>
+        <button class="btn btn-ghost btn-sm" id="btn-open-calc-home" title="Scientific Calculator (K)">Calc <span class="kbd">K</span></button>
+        <button class="btn btn-ghost btn-icon" id="btn-theme-home" title="Toggle Dark / Light Theme">☀</button>
+      </div>
+    </header>
+
+    <main class="home-wrap">
+      <!-- Unfinished Session Strip -->
+      <div id="resume-banner" class="resume-strip hidden">
+        <span id="resume-meta">Unfinished session saved</span>
+        <div class="nav-group">
+          <button class="btn btn-primary btn-sm" id="btn-resume-session">Resume</button>
+          <button class="btn btn-ghost btn-sm" id="btn-discard-session">Discard</button>
+        </div>
+      </div>
+
+      <!-- Precision Studio Hero -->
+      <section class="hero-studio spotlight-card" id="hero-studio">
+        <div>
+          <div class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            <span>ME 103 · Complete Syllabus Verified</span>
+          </div>
+          <h1>Master <span class="text-grad">Engineering Materials</span></h1>
+          <p class="hero-sub">
+            <strong style="color:var(--text)" id="kpi-total">576</strong> exam-grade MCQs spanning crystallography, phase diagrams, Fe–Fe₃C, heat treatment, composites, semiconductors &amp; corrosion.
+          </p>
+          <div class="hero-cta">
+            <button class="btn btn-primary btn-lg" data-preset="sprint30">
+              <span>Start Practice (30 Qs)</span>
+              <span class="btn-cta-arrow">→</span>
+            </button>
+            <button class="btn btn-lg" data-preset="mock60">Timed Mock (60m)</button>
+            <button class="text-link hidden" id="btn-reset-stats" style="margin-left:4px">Reset</button>
+          </div>
+        </div>
+
+        <!-- Real-Time Interactive 3D FCC Crystal Lattice + Readiness Gauge -->
+        <div class="hero-visual">
+          <canvas id="crystal-canvas" width="496" height="496" aria-hidden="true"></canvas>
+          <div class="readiness-ring-wrap">
+            <svg class="readiness-svg" viewBox="0 0 120 120" aria-hidden="true">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="55%" stop-color="#818cf8"/>
+                  <stop offset="100%" stop-color="#34d399"/>
+                </linearGradient>
+              </defs>
+              <circle class="ring-track" cx="60" cy="60" r="50"/>
+              <circle class="ring-arc" id="hero-ring-arc" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+            </svg>
+            <div class="ring-center">
+              <div class="ring-pct" id="kpi-accuracy">—</div>
+              <div class="ring-lbl" id="hero-ring-lbl">Accuracy</div>
+            </div>
+          </div>
+          <div class="hero-micro-stats">
+            <span><strong id="kpi-attempted">0/576</strong> practiced</span>
+            <span style="opacity:0.35">·</span>
+            <span><strong id="kpi-wrong-mini">0</strong> to review</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Animated Sliding 3-Tab Switcher -->
+      <div class="tabs-row">
+        <div class="tabs" id="home-tabs">
+          <div class="tab-glider" id="home-tab-glider"></div>
+          <button class="tab-btn active" data-htab="quick">Quick Start</button>
+          <button class="tab-btn" data-htab="chapters">Chapters (15)</button>
+          <button class="tab-btn" data-htab="custom">Custom Rules</button>
+        </div>
+        <span class="brand-tag" style="font-size:12px">Hover any chapter to quick-drill · Right-click options to eliminate</span>
+      </div>
+
+      <!-- TAB 1: QUICK START -->
+      <section id="htab-quick">
+        <div class="quick-grid" id="preset-grid">
+          <button class="quick-row spotlight-card" data-preset="midsem">
+            <div class="quick-left">
+              <span class="icon-tile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2"/><polyline points="3.3 7 12 12 20.7 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+              </span>
+              <div class="quick-text">
+                <div class="quick-row-title">Mid-Sem Syllabus</div>
+                <div class="quick-row-sub">Ch 1–10 · Crystallography, Phase Diagrams, Fe–C, Heat Treat</div>
+              </div>
+            </div>
+            <span class="quick-row-right mono">60 Qs ›</span>
+            <span class="card-hairline-progress"><i id="bar-midsem"></i></span>
+          </button>
+
+          <button class="quick-row spotlight-card" data-preset="endsem">
+            <div class="quick-left">
+              <span class="icon-tile t-violet">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(35 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(-35 12 12)"/></svg>
+              </span>
+              <div class="quick-text">
+                <div class="quick-row-title">End-Sem Syllabus</div>
+                <div class="quick-row-sub">Ch 11–17 · Bonding, Defects, Tensile, Composites, IC &amp; PBR</div>
+              </div>
+            </div>
+            <span class="quick-row-right mono">60 Qs ›</span>
+            <span class="card-hairline-progress"><i id="bar-endsem"></i></span>
+          </button>
+
+          <button class="quick-row spotlight-card" data-preset="numericals">
+            <div class="quick-left">
+              <span class="icon-tile t-amber">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 5H6l6 7-6 7h12"/></svg>
+              </span>
+              <div class="quick-text">
+                <div class="quick-row-title">Numericals Bootcamp</div>
+                <div class="quick-row-sub">APF, d<sub>hkl</sub>, Lever Rule, Tensile, ROM, Fourier &amp; Fick</div>
+              </div>
+            </div>
+            <span class="quick-row-right mono" id="preset-num-cnt">154 Qs ›</span>
+          </button>
+
+          <button class="quick-row spotlight-card" data-preset="traps">
+            <div class="quick-left">
+              <span class="icon-tile t-rose">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <div class="quick-text">
+                <div class="quick-row-title">Exam Traps &amp; Diagrams</div>
+                <div class="quick-row-sub">Ch 19 pitfalls &amp; interactive SVG phase-diagram figures</div>
+              </div>
+            </div>
+            <span class="quick-row-right mono" id="preset-trap-cnt">162 Qs ›</span>
+          </button>
+
+          <button class="quick-row spotlight-card" data-preset="mistakes">
+            <div class="quick-left">
+              <span class="icon-tile t-rose">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+              </span>
+              <div class="quick-text">
+                <div class="quick-row-title">Wrong Answers Queue</div>
+                <div class="quick-row-sub">Auto-collected mistakes for focused pre-quiz redrill</div>
+              </div>
+            </div>
+            <span class="quick-row-right mono" id="preset-wrong-cnt">0 Qs ›</span>
+          </button>
+
+          <button class="quick-row spotlight-card" data-preset="bookmarks">
+            <div class="quick-left">
+              <span class="icon-tile t-emerald">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg>
+              </span>
+              <div class="quick-text">
+                <div class="quick-row-title">Bookmarked Questions</div>
+                <div class="quick-row-sub">Your starred high-priority revision deck</div>
+              </div>
+            </div>
+            <span class="quick-row-right mono" id="preset-bm-cnt">0 Qs ›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- TAB 2: CHAPTERS -->
+      <section id="htab-chapters" class="hidden">
+        <div class="chapters-head">
+          <span class="brand-tag"><strong style="color:var(--text)" id="selected-mod-count">15</strong> of 15 modules selected</span>
+          <div class="nav-group">
+            <button class="text-link" id="btn-sel-all">All</button>
+            <span style="opacity:0.35">·</span>
+            <button class="text-link" id="btn-sel-mid">Mid-Sem</button>
+            <span style="opacity:0.35">·</span>
+            <button class="text-link" id="btn-sel-end">End-Sem</button>
+            <span style="opacity:0.35">·</span>
+            <button class="text-link" id="btn-sel-none">Clear</button>
+          </div>
+        </div>
+
+        <div class="chapters-list" id="chapter-grid"></div>
+
+        <div class="action-footer-bar">
+          <span class="brand-tag" id="ch-matching-label">576 questions selected</span>
+          <div class="nav-group">
+            <button class="btn btn-sm" id="btn-ch-mock">Timed Mock (40 Qs)</button>
+            <button class="btn btn-primary btn-sm" id="btn-ch-practice">Practice Selected <span class="btn-cta-arrow">→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CUSTOM RULES -->
+      <section id="htab-custom" class="hidden">
+        <div class="form-card">
+          <div class="form-grid">
+            <div class="field">
+              <label for="cfg-mode">Session Mode</label>
+              <select id="cfg-mode">
+                <option value="practice" selected>Practice (Instant Explanations)</option>
+                <option value="exam">Mock Exam (Answers on Submit)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cfg-count">Questions</label>
+              <select id="cfg-count">
+                <option value="20">20 Questions</option>
+                <option value="40">40 Questions</option>
+                <option value="60" selected>60 Questions</option>
+                <option value="100">100 Questions</option>
+                <option value="all">All Matching</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cfg-timer">Timer</label>
+              <select id="cfg-timer">
+                <option value="0" selected>Untimed (Stopwatch)</option>
+                <option value="45">45 sec / question</option>
+                <option value="60">60 sec / question</option>
+                <option value="90">90 sec / question</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cfg-neg">Negative Marking</label>
+              <select id="cfg-neg">
+                <option value="0" selected>None (+1 / 0)</option>
+                <option value="0.25">−0.25 per wrong</option>
+                <option value="0.3333">−0.33 per wrong</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cfg-diff">Difficulty</label>
+              <select id="cfg-diff">
+                <option value="All" selected>All Difficulties</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cfg-type">Question Type</label>
+              <select id="cfg-type">
+                <option value="All" selected>All Types</option>
+                <option value="Conceptual">Conceptual</option>
+                <option value="Numerical">Numerical</option>
+                <option value="Formula">Formula</option>
+                <option value="Diagram">Diagram</option>
+                <option value="Trap">Exam Trap</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="checks-row">
+            <label class="check-opt"><input type="checkbox" id="cfg-shuffle-q" checked /> Shuffle questions</label>
+            <label class="check-opt"><input type="checkbox" id="cfg-shuffle-opt" checked /> Shuffle options (A–D)</label>
+            <label class="check-opt"><input type="checkbox" id="cfg-unseen-only" /> Unattempted only</label>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <span class="brand-tag" id="matching-count-label">576 matching questions</span>
+            <button class="btn btn-primary" id="btn-launch-custom">Launch Session <span class="btn-cta-arrow">→</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==================== VIEW 2: LIVE CBT WORKSPACE ==================== -->
+  <div id="view-exam" class="hidden">
+    <div class="exam-header-wrap">
+      <header class="exam-bar">
+        <div class="exam-bar-left">
+          <button class="btn btn-ghost btn-sm" id="btn-exit-exam">← Exit</button>
+          <span class="mono" style="font-size:13.5px;font-weight:700" id="hud-progress">1 / 60</span>
+          <span class="brand-tag" id="hud-mode-label">Practice</span>
+        </div>
+
+        <div class="exam-bar-center">
+          <button class="timer-chip" id="hud-timer" title="Click to pause/resume in Practice mode">00:00</button>
+          <span class="streak-chip hidden" id="hud-streak">3 Streak</span>
+        </div>
+
+        <div class="exam-bar-right">
+          <button class="btn btn-ghost btn-sm" id="btn-open-calc-exam" title="Calculator (K)">Calc</button>
+          <button class="btn btn-ghost btn-sm" id="btn-open-formulas-exam" title="Formulas &amp; Diagrams (F)">Formulas</button>
+          <div class="pop-wrap">
+            <button class="btn btn-ghost btn-icon" id="btn-exam-menu" title="Display &amp; Settings">⚙</button>
+            <div class="popover hidden" id="exam-popover">
+              <div class="pop-row">
+                <span>Text size</span>
+                <div class="nav-group">
+                  <button class="btn btn-sm" id="btn-font-dec" style="height:26px;padding:0 8px">A−</button>
+                  <button class="btn btn-sm" id="btn-font-inc" style="height:26px;padding:0 8px">A+</button>
+                </div>
+              </div>
+              <div class="pop-row" style="cursor:pointer" id="pop-palette-toggle">
+                <span>Question palette</span>
+                <strong id="pop-pal-state">Shown</strong>
+              </div>
+              <div class="pop-row" style="cursor:pointer" id="pop-sound-toggle">
+                <span>Tactile sound</span>
+                <strong id="pop-sound-state">Off</strong>
+              </div>
+              <div class="pop-row" style="cursor:pointer" id="btn-theme-exam">
+                <span>Theme</span>
+                <strong id="pop-theme-state">Dark</strong>
+              </div>
+              <div class="pop-row" style="cursor:pointer" id="btn-shortcuts">
+                <span>Shortcuts</span>
+                <span class="kbd">?</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btn-submit-top">Submit</button>
+        </div>
+      </header>
+      <div class="exam-progress-rail"><div class="exam-progress-fill" id="exam-progress-fill"></div></div>
+    </div>
+
+    <div class="exam-shell" id="exam-shell">
+      <section class="q-stage" id="q-stage">
+        <div class="q-meta-line">
+          <div class="q-meta-text" id="q-meta-text">Chapter · Medium · Conceptual</div>
+          <div class="q-meta-actions">
+            <button class="icon-toggle" id="btn-bookmark" title="Bookmark (S)">☆ Save</button>
+            <button class="icon-toggle" id="btn-mark-toggle" title="Mark for Review (M)">⚑ Mark</button>
+          </div>
+        </div>
+
+        <div id="q-anim-body">
+          <div class="q-prompt" id="q-prompt">Loading...</div>
+          <div id="q-diagram-slot" class="diagram-wrap hidden"></div>
+          <div class="options-stack" id="options-list"></div>
+          <div id="exp-slot" class="exp-panel hidden"></div>
+        </div>
+
+        <div class="q-nav-bar">
+          <div class="nav-group">
+            <button class="btn btn-ghost btn-sm" id="btn-clear-resp" title="Clear selection (X)">Clear</button>
+            <button class="btn btn-ghost btn-sm" id="btn-mark-next">Mark &amp; Next</button>
+          </div>
+          <div class="nav-group">
+            <button class="btn" id="btn-prev" title="Previous (←)"><span class="kbd">←</span> Prev</button>
+            <button class="btn btn-primary" id="btn-next" title="Next (→ / Enter)">Next <span class="kbd">→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="palette-aside">
+        <div class="pal-summary">
+          <span>Questions · <strong class="mono" style="color:var(--text)" id="pal-answered-ratio">0/0</strong></span>
+          <input type="number" min="1" class="pal-jump-input" id="pal-jump" placeholder="Go #" title="Type question number and press Enter" />
+        </div>
+        <div class="pal-mini-bar"><div id="pal-mini-fill" style="width:0%"></div></div>
+
+        <div class="pal-tabs" id="palette-filters">
+          <button class="pal-tab active" data-pfilter="all">All</button>
+          <button class="pal-tab" data-pfilter="unanswered">Left</button>
+          <button class="pal-tab" data-pfilter="marked">Marked</button>
+          <button class="pal-tab" data-pfilter="bookmarked">Saved</button>
+        </div>
+
+        <div class="pal-grid" id="palette-grid"></div>
+
+        <div class="pal-key">
+          <span><i class="sw" style="background:var(--emerald)"></i> <span id="cnt-ans">0</span> Ans</span>
+          <span><i class="sw" style="background:var(--rose)"></i> <span id="cnt-skip">0</span> Skip</span>
+          <span><i class="sw" style="background:var(--violet)"></i> <span id="cnt-mark">0</span> Mark</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ==================== VIEW 3: RESULTS ==================== -->
+  <div id="view-results" class="hidden">
+    <header class="topbar">
+      <div class="brand" id="brand-results">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2"/></svg>
+        </span>
+        <span class="brand-name">Session Report</span>
+        <span class="brand-tag" id="res-session-meta"></span>
+      </div>
+      <div class="nav-group">
+        <button class="btn btn-ghost btn-sm" id="btn-open-formulas-res">Formulas</button>
+        <button class="btn btn-ghost btn-icon" id="btn-theme-res" title="Toggle Theme">☀</button>
+        <button class="btn btn-sm" id="btn-back-home">← Home</button>
+      </div>
+    </header>
+
+    <main class="results-wrap">
+      <section class="score-hero">
+        <div class="res-ring-box">
+          <svg class="res-ring-svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="resRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="55%" stop-color="#818cf8"/>
+                <stop offset="100%" stop-color="#34d399"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-track" cx="60" cy="60" r="50"/>
+            <circle class="ring-arc" id="res-ring-arc" style="stroke:url(#resRingGrad)" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+          </svg>
+          <div class="ring-center">
+            <div class="res-ring-pct" id="res-pct">0%</div>
+            <div class="ring-lbl">Score</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="brand-tag" id="res-grade-label" style="margin-bottom:3px">Completed</div>
+          <div class="display-font" style="font-size:28px;font-weight:700;letter-spacing:-0.025em" id="res-headline">0 / 0</div>
+          <div class="stacked-bar" aria-label="Outcome distribution">
+            <div class="sb-correct" id="sb-correct" style="width:0%"></div>
+            <div class="sb-wrong" id="sb-wrong" style="width:0%"></div>
+            <div class="sb-skip" id="sb-skip" style="width:100%"></div>
+          </div>
+          <div class="metric-strip">
+            <div class="metric-cell"><div class="m-val" id="res-correct" style="color:var(--emerald)">0</div><div class="m-lbl">Correct</div></div>
+            <div class="metric-cell"><div class="m-val" id="res-wrong" style="color:var(--rose)">0</div><div class="m-lbl">Wrong</div></div>
+            <div class="metric-cell"><div class="m-val" id="res-skipped" style="color:var(--muted)">0</div><div class="m-lbl">Skipped</div></div>
+            <div class="metric-cell"><div class="m-val" id="res-acc">0%</div><div class="m-lbl">Accuracy</div></div>
+            <div class="metric-cell"><div class="m-val mono" id="res-time">00:00</div><div class="m-lbl">Time</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-primary btn-sm" id="btn-new-test">New Session</button>
+          <button class="btn btn-danger btn-sm" id="btn-retry-wrong">Retry Wrong</button>
+          <button class="btn btn-sm" id="btn-drill-weak">Drill Weak</button>
+        </div>
+      </section>
+
+      <div class="tabs-row" style="margin-top:0">
+        <div class="tabs" id="res-tabs">
+          <div class="tab-glider" id="res-tab-glider"></div>
+          <button class="tab-btn active" data-rtab="overview">Analytics Overview</button>
+          <button class="tab-btn" data-rtab="solutions">Solution Review</button>
+        </div>
+        <span class="brand-tag">Click any chapter bar to practice that module</span>
+      </div>
+
+      <section id="rtab-overview" class="overview-grid">
+        <div class="card-clean">
+          <h3>Chapter Accuracy</h3>
+          <div id="res-chapter-bars"></div>
+        </div>
+        <div class="card-clean">
+          <h3>Difficulty &amp; Question Type</h3>
+          <div id="res-diff-bars" style="margin-bottom:20px"></div>
+          <div id="res-type-bars"></div>
+        </div>
+      </section>
+
+      <section id="rtab-solutions" class="hidden">
+        <div class="rev-controls">
+          <div class="nav-group">
+            <button class="pal-tab active" data-rfilter="all">All</button>
+            <button class="pal-tab" data-rfilter="wrong">Wrong</button>
+            <button class="pal-tab" data-rfilter="skipped">Skipped</button>
+            <button class="pal-tab" data-rfilter="marked">Marked</button>
+            <button class="pal-tab" data-rfilter="correct">Correct</button>
+          </div>
+          <input type="text" id="rev-search" class="input-clean" placeholder="Search questions..." style="max-width:260px;height:34px" />
+        </div>
+        <div id="review-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==================== MODAL: FORMULA SHEET & DIAGRAMS ==================== -->
+  <div id="modal-formulas" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span>Master Formula Sheet &amp; Diagrams</span>
+        <button class="btn btn-ghost btn-sm" data-close-modal="modal-formulas">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <input type="text" id="formula-search" class="input-clean" placeholder="Search formulas (Lever, Fick, PBR, Miller, ROM)..." style="flex:1;min-width:200px;height:36px" />
+          <button class="btn btn-primary btn-sm" id="btn-tab-formulas">Formulas</button>
+          <button class="btn btn-sm" id="btn-tab-diagrams">17 Diagrams</button>
+        </div>
+        <div class="chip-strip" id="formula-chips"></div>
+        <div id="formula-content"></div>
+        <div id="diagram-vault-content" class="hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: DIAGRAM LIGHTBOX ==================== -->
+  <div id="modal-diagram" class="modal-backdrop hidden">
+    <div class="modal-box" style="max-width:940px">
+      <div class="modal-head">
+        <span id="lightbox-title">Diagram</span>
+        <button class="btn btn-ghost btn-sm" data-close-modal="modal-diagram">✕</button>
+      </div>
+      <div class="modal-body" id="lightbox-body"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: SCIENTIFIC CALCULATOR ==================== -->
+  <div id="modal-calc" class="modal-backdrop hidden">
+    <div class="modal-box modal-sm">
+      <div class="modal-head">
+        <span>Scientific Calculator</span>
+        <button class="btn btn-ghost btn-sm" data-close-modal="modal-calc">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="calc-screen">
+          <input type="text" class="calc-expr" id="calc-input" placeholder="e.g. acos(4/(3*sqrt(2)))" />
+          <div class="calc-res" id="calc-output">0</div>
+        </div>
+        <div class="calc-hist hidden" id="calc-hist"></div>
+        <div class="calc-consts">
+          <button class="btn btn-sm" data-cins="6.022e23">N<sub>A</sub></button>
+          <button class="btn btn-sm" data-cins="1.6e-19">q</button>
+          <button class="btn btn-sm" data-cins="8.617e-5">k<sub>B</sub></button>
+          <button class="btn btn-sm" data-cins="8.314">R</button>
+          <button class="btn btn-sm" data-cins="pi">π</button>
+          <button class="btn btn-sm" data-cins="sqrt(2)">√2</button>
+          <button class="btn btn-sm" data-cins="sqrt(3)">√3</button>
+        </div>
+        <div class="calc-grid">
+          <button class="calc-btn op" data-cins="sqrt(">√</button>
+          <button class="calc-btn op" data-cins="ln(">ln</button>
+          <button class="calc-btn op" data-cins="log(">log</button>
+          <button class="calc-btn op" data-cins="exp(">eˣ</button>
+          <button class="calc-btn op" data-cins="acos(">cos⁻¹</button>
+          <button class="calc-btn" data-cins="(">(</button>
+          <button class="calc-btn" data-cins=")">)</button>
+          <button class="calc-btn op" data-cins="^">xʸ</button>
+          <button class="calc-btn op" data-cins="e">×10ˣ</button>
+          <button class="calc-btn op" id="calc-clr">AC</button>
+          <button class="calc-btn" data-cins="7">7</button>
+          <button class="calc-btn" data-cins="8">8</button>
+          <button class="calc-btn" data-cins="9">9</button>
+          <button class="calc-btn op" data-cins="/">÷</button>
+          <button class="calc-btn op" id="calc-bksp">⌫</button>
+          <button class="calc-btn" data-cins="4">4</button>
+          <button class="calc-btn" data-cins="5">5</button>
+          <button class="calc-btn" data-cins="6">6</button>
+          <button class="calc-btn op" data-cins="*">×</button>
+          <button class="calc-btn op" data-cins="cos(">cos</button>
+          <button class="calc-btn" data-cins="1">1</button>
+          <button class="calc-btn" data-cins="2">2</button>
+          <button class="calc-btn" data-cins="3">3</button>
+          <button class="calc-btn op" data-cins="-">−</button>
+          <button class="calc-btn op" data-cins="sin(">sin</button>
+          <button class="calc-btn" data-cins="0">0</button>
+          <button class="calc-btn" data-cins=".">.</button>
+          <button class="calc-btn op" data-cins="e-">10⁻</button>
+          <button class="calc-btn op" data-cins="+">+</button>
+          <button class="calc-btn eq" id="calc-eval">=</button>
+        </div>
+        <div class="brand-tag" style="margin-top:8px">Trig in degrees · Enter evaluates · Click history chip to reuse</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: CONFIRM / SHORTCUTS ==================== -->
+  <div id="modal-confirm" class="modal-backdrop hidden">
+    <div class="modal-box modal-sm">
+      <div class="modal-head">
+        <span id="confirm-title">Confirm</span>
+        <button class="btn btn-ghost btn-sm" data-close-modal="modal-confirm">✕</button>
+      </div>
+      <div class="modal-body" id="confirm-body"></div>
+      <div class="modal-foot">
+        <button class="btn btn-sm" data-close-modal="modal-confirm">Cancel</button>
+        <button class="btn btn-primary btn-sm" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Micro-Toast & Confetti Layer -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <canvas id="confetti-canvas" class="hidden"></canvas>
+
+  <script src="data/chapters.js"></script>
+  <script src="data/mod01_crystals.js"></script>
+  <script src="data/mod02_packing_density.js"></script>
+  <script src="data/mod03_miller.js"></script>
+  <script src="data/mod04_phase_diagrams.js"></script>
+  <script src="data/mod05_fe_c.js"></script>
+  <script src="data/mod06_heat_treatment.js"></script>
+  <script src="data/mod07_non_ferrous.js"></script>
+  <script src="data/mod08_bonding.js"></script>
+  <script src="data/mod09_defects_slip.js"></script>
+  <script src="data/mod10_mechanical.js"></script>
+  <script src="data/mod11_composites.js"></script>
+  <script src="data/mod12_polymers_ceramics.js"></script>
+  <script src="data/mod13_elec_mag_therm.js"></script>
+  <script src="data/mod14_semicon_ic.js"></script>
+  <script src="data/mod15_corrosion_traps.js"></script>
+  <script src="diagrams.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
